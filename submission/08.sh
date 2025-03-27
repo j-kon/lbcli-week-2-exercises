@@ -1,3 +1,4 @@
+#!/bin/bash
 # Create a transaction whose fee can be later updated to a higher fee if it is stuck or doesn't get mined on time.
 
 # Amount of 20,000,000 satoshis to this address: 2MvLcssW49n9atmksjwg2ZCMsEMsoj3pzUP 
@@ -9,6 +10,7 @@ utxo_txid=$(bitcoin-cli -regtest decoderawtransaction $raw_tx | jq -r '.txid')
 utxo_vout=$(bitcoin-cli -regtest decoderawtransaction $raw_tx | jq -r '.vout[0].n')
 
 # Create a raw transaction with RBF enabled (sequence < 0xfffffffe).
+# 0xfffffffe = 4294967294, so we use 4294967293 to enable RBF
 recipient_address="2MvLcssW49n9atmksjwg2ZCMsEMsoj3pzUP"
 amount=0.2 # 20,000,000 satoshis = 0.2 BTC
 raw_transaction=$(bitcoin-cli -regtest createrawtransaction \
