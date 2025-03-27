@@ -18,5 +18,8 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+# Ensure the output is an integer
+total_output_value=$(printf "%.0f" $total_output_value)
+
 # Output the total output value in satoshis
-echo "Total Output Value (satoshis): $total_output_value"
+echo $total_output_value
