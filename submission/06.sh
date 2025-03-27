@@ -8,18 +8,12 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Debug: Print the decoded transaction
-echo "Decoded Transaction: $decoded_tx"
-
 # Extract and calculate the total output value in satoshis
 total_output_value=$(echo $decoded_tx | jq '[.vout[].value] | map(. * 100000000 | floor) | add')
 if [ $? -ne 0 ]; then
   echo "❌ Error: Failed to calculate the total output value."
   exit 1
 fi
-
-# Ensure the output is an integer
-total_output_value=$(printf "%.0f" $total_output_value)
 
 # Output the total output value in satoshis
 echo $total_output_value
